@@ -6,11 +6,11 @@ https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2023&layergroup=Sta
 
 ssc install shp2dta
 
-global route "C:\Users\tmorg\Desktop\gap_year"
+global route "C:/Users/toom/Desktop/gap_year"
 
 import delimited using "$route/data/school_latlons.csv", varn(1) clear
 
-rename (lat lon) (_Y _X)
+rename (lat lon stusps) (_Y _X STUSPS)
 
 drop if team=="Alaska"
 
@@ -26,7 +26,7 @@ use coords, clear
 
 merge m:1 _ID using data, keep(1 3) nogen
 
-drop if inlist(STATEFP, "02", "15", "72", "60", "66", "69", "78")
+drop if inlist(STUSPS, "AK", "AS", "GU", "HI", "MP", "PR", "VI")
 
 append using "$route/data/school_coords.dta"
 
