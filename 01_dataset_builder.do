@@ -12,7 +12,7 @@ https://yaledailynews.com/blog/2021/12/10/gymnastics-yale-ready-to-flip-into-new
 discard
 clear all
 
-global route "C:/Users/toom/Desktop/gap_year"
+global route "C:/Users/toom/Desktop/long_layoff"
 
 
 ***************************************************************

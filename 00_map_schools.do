@@ -18,9 +18,9 @@ save "$route/data/school_coords.dta", replace
 
 
 
-cd "$route/data/cb_2018_us_county_500k"
+cd "$route/data/cb_2018_us_state_500k"
 
-shp2dta using cb_2018_us_county_500k, data(data) coord(coords) replace
+shp2dta using cb_2018_us_state_500k, data(data) coord(coords) replace
 
 use coords, clear
 
