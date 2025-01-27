@@ -6,7 +6,7 @@ https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2023&layergroup=Sta
 
 ssc install shp2dta
 
-global route "C:/Users/toom/Desktop/gap_year"
+global route "C:/Users/toom/Desktop/long_layoff"
 
 import delimited using "$route/data/school_latlons.csv", varn(1) clear
 
@@ -18,9 +18,9 @@ save "$route/data/school_coords.dta", replace
 
 
 
-cd "$route/data/cb_2018_us_state_500k"
+cd "$route/data/cb_2018_us_county_500k"
 
-shp2dta using cb_2018_us_state_500k, data(data) coord(coords) replace
+shp2dta using cb_2018_us_county_500k, data(data) coord(coords) replace
 
 use coords, clear
 
