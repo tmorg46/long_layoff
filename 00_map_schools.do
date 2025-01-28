@@ -8,15 +8,6 @@ ssc install shp2dta
 
 global route "C:/Users/toom/Desktop/long_layoff"
 
-import delimited using "$route/data/school_latlons.csv", varn(1) clear
-
-rename (lat lon stusps) (_Y _X STUSPS)
-
-drop if team=="Alaska"
-
-save "$route/data/school_coords.dta", replace
-
-
 
 cd "$route/data/cb_2018_us_state_500k"
 
