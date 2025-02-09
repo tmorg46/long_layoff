@@ -34,7 +34,7 @@ drop changer teamswap
 
 reshape wide score, i(gymnast team) j(year) // we need to have the gymnasts as a single observation now and mark the years they have scores!!
 
-keep if score2019!=. & score2020!=. & score2022!=.
+keep if score2020!=. & score2022!=.
 
 
 *keep only the gymnasts from teams in NorCal, the Northeast, or DII/DIII
@@ -46,11 +46,13 @@ replace northeast = 1 if inlist(team, "Springfield College", "Rhode Island Colle
 merge m:1 team using "${route}/data/team_divisions.dta", keep(1 3) nogen
 gen d2d3 = division!=1
 
+replace northeast = 0 if d2d3==1 // these are going to be different specifications
+
 keep if norcal==1 | northeast==1 | d2d3==1
 
 
 *make a marker for not having a 2021 season, or for having 'been laid off'
-gen layoff 	= team=="UC Davis" 			///
+gen layoff = team=="UC Davis" 			///
 		| team=="Sacramento State" 		///
 		| team=="Cornell" 				///
 		| team=="Ithaca College" 		///
@@ -88,6 +90,18 @@ import delimited using "$route/data/all_scores_2015-2024.csv", varn(1) clear
 
 merge m:1 gymnast using `sample', keep(3) nogen // keep(3) keeps only scores from gymnasts we're keeping in our sample!!!
 drop gymnast
+
+*now we want to make a measure of the number of meets a gymnast has competed over her career
+gen datenum = date(date,"MDY") // this will let us sort meets correctly in order
+sort gymnast datenum
+
+gen career_meetnum=1 									  // this will be the career meet count...
+gen swapmeet = date!=date[_n-1]							  // this marks when a meet changes...
+replace career_meetnum = career_meetnum[_n-1] + swapmeet /// we count up across meets...
+	if gymnast==gymnast[_n-1] 							  // within gymnasts!
+
+drop datenum swapmeet
+
 
 *now let's get our classic diff-in-diff variables. first, layoff is our TREAT measure, so:
 gen post 	  = year>2021 		// the years after the treatment (POST) are any years after 2021!

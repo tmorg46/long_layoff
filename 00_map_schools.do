@@ -25,7 +25,19 @@ gen states = STATEFP!=""
 
 
 
-twoway area _Y _X if states==1, cmiss(n) fi(25) col(gray) leg(off) ysc(off) yla(,nogrid) xla(,nogrid) xsc(off) graphr(fc(white)) || scatter _Y _X if states==0 & had2021==0 || scatter _Y _X if states==0 & had2021==1
+twoway ///
+	area _Y _X if states==1				///
+		, cmiss(n) fi(25) col(gray) 	///
+		leg(off) ysc(off) yla(,nogrid)	/// 
+		xla(,nogrid) xsc(off) 			///
+		graphr(fc(white)) 				///
+	|| ///
+	scatter _Y _X if states==0 & division!=1 & had2021==1	///
+		, m(T) mcolor(green)								///
+	|| ///
+	scatter _Y _X if states==0 & division!=1 & had2021==0	///
+		, m(T) mcolor(red)
+
 
 
 
