@@ -4,7 +4,7 @@ make one big dataset-building file, where, for each of our relevant specs:
 	- the meet scores dataset with one observation per team-meet
 	- the event scores dataset with one observation per team-event-meet
 	- the individual scores dataset with one observation per gymnast-event-meet 
-		- for each gymnast performing at a school in one of our specs on both sides of the 2021 gap 
+		- for each gymnast performing at a school in one of our specs on both sides of the 2021 gap
 */
 
 discard
@@ -72,7 +72,6 @@ gen d2 = division==2
 
 gen d3 = division==3
 
-keep if norcal==1 | ivy==1 | ne_nos==1 | d2==1 | d3==1 // we only care about the spec teams
 
 sort team
 gen team_id = 1
@@ -142,13 +141,16 @@ gen d2 = division==2
 
 gen d3 = division==3
 
-keep if norcal==1 | ivy==1 | ne_nos==1 | d2==1 | d3==1 // we only care about the spec teams
-
 sort team
 gen team_id = 1
 gen swapteam = team!=team[_n-1]
 replace team_id = team_id[_n-1] + swapteam in 2/L // this block creates a numeric team id for later fixed effects
 drop swapteam
+
+*build the remaining diff-in-diff variables:
+gen post 	  = year>2021
+gen no21_post = year>2021 & no2021==1
+gen ivy_post  = year>2021 & ivy==1
 
 sort datenum team event
 save "${route}/data/A_event_scores.dta", replace // done deal!
@@ -209,8 +211,6 @@ gen d2 = division==2
 
 gen d3 = division==3
 
-keep if norcal==1 | ivy==1 | ne_nos==1 | d2==1 | d3==1
-
 keep gymnast team no2021 ///
 		norcal ivy ne_nos d2 d3 // these are the only vars we need right now to narrow the folks down
 
@@ -240,6 +240,11 @@ gen career_meetnum=1 									 //  this will be the career meet count...
 gen swapmeet = date!=date[_n-1]							 //  so mark when a meet changes...
 replace career_meetnum = career_meetnum[_n-1] + swapmeet /// and count up across meets...
 	if gymnast==gymnast[_n-1] 							 //  and within gymnasts!
+	
+*build the remaining diff-in-diff variables:
+gen post 	  = year>2021
+gen no21_post = year>2021 & no2021==1
+gen ivy_post  = year>2021 & ivy==1
 	
 drop swapmeet
 sort datenum team gymnast_id event
