@@ -20,6 +20,17 @@ global route "C:/Users/toom/Desktop/long_layoff"
 *open the full dataset
 import delimited using "${route}/data/raw_data/all_scores_2015-2024.csv", varn(1) clear
 
+drop if inlist(team, ///
+	"Clemson", 			///
+	"Fisk", 			///
+	"Greenville", 		///
+	"LIU", 				///
+	"Seattle Pacific", 	///
+	"Simpson", 			///
+	"Talladega", 		///
+	"UIC", 				///
+	"Utica")			// these teams are either newer than 2020 or didn't last through 2021
+
 gen datenum = date(date,"MDY") // this will let us sort meets correctly in order
 
 gsort datenum meettitle team event -score // this groups each team's scores and puts the highest on top, accounting for multiple meets on one day, which sometimes happens in playoffs
@@ -97,6 +108,17 @@ save "${route}/data/A_meet_scores.dta", replace
 *open the full dataset
 import delimited using "${route}/data/raw_data/all_scores_2015-2024.csv", varn(1) clear
 
+drop if inlist(team, ///
+	"Clemson", 			///
+	"Fisk", 			///
+	"Greenville", 		///
+	"LIU", 				///
+	"Seattle Pacific", 	///
+	"Simpson", 			///
+	"Talladega", 		///
+	"UIC", 				///
+	"Utica")			// these teams are either newer than 2020 or didn't last through 2021
+
 gen datenum = date(date,"MDY") // this will let us sort meets correctly in order
 
 gsort datenum meettitle team event -score // this groups each team's scores and puts the highest on top, accounting for multiple meets on one day, which sometimes happens in playoffs
@@ -163,6 +185,17 @@ save "${route}/data/A_event_scores.dta", replace // done deal!
 // done!
 *open the full dataset
 import delimited using "${route}/data/raw_data/all_scores_2015-2024.csv", varn(1) clear
+
+drop if inlist(team, ///
+	"Clemson", 			///
+	"Fisk", 			///
+	"Greenville", 		///
+	"LIU", 				///
+	"Seattle Pacific", 	///
+	"Simpson", 			///
+	"Talladega", 		///
+	"UIC", 				///
+	"Utica")			// these teams are either newer than 2020 or didn't last through 2021
 
 collapse score, by(gymnast team year) // we gotta get these down to gymnasts-by-year, saving team to check for switchers
 
