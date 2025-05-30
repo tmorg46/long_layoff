@@ -36,9 +36,11 @@ reg score no21_post i.team_id i.year i.event	if d3==1		// All 15 D3 teams
 use "${route}/data/A_routine_scores.dta", clear
 
 *let's go by spec:
-areg score no21_post i.gymnast_id	if norcal==1	, absorb(emnumid) // NorCal
-areg score no21_post i.gymnast_id	if d2==1		, absorb(emnumid) // D2
-areg score no21_post i.gymnast_id	if d3==1		, absorb(emnumid) // D3
+areg score no21_post i.gymnast_id	if thru21==1 & norcal==1, absorb(emnumid) // NorCal
+areg score no21_post i.gymnast_id	if thru21==1 & d2==1	, absorb(emnumid) // D2
+areg score no21_post i.gymnast_id	if thru21==1 & d3==1	, absorb(emnumid) // D3
+
+// do this with full aregs on Stata19 after sync for the pre/post only girlies
 
 
 
