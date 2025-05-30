@@ -7,7 +7,7 @@ playground for some baseline regression results, preliminary stuff?
 discard
 clear all
 
-global route "C:/Users/toom/Desktop/long_layoff"
+global route "/Users/tmorg46/Desktop/long_layoff"
 
 
 ****************************************
@@ -36,11 +36,23 @@ reg score no21_post i.team_id i.year i.event	if d3==1		// All 15 D3 teams
 use "${route}/data/A_routine_scores.dta", clear
 
 *let's go by spec:
-areg score no21_post i.gymnast_id	if thru21==1 & norcal==1, absorb(emnumid) // NorCal
-areg score no21_post i.gymnast_id	if thru21==1 & d2==1	, absorb(emnumid) // D2
-areg score no21_post i.gymnast_id	if thru21==1 & d3==1	, absorb(emnumid) // D3
+areg score no21_post if thru21==1 & norcal==1, absorb(gymnast_id emnumid) nolog // NorCal
+areg score no21_post if thru21==1 & d2==1	 , absorb(gymnast_id emnumid) nolog // D2
+areg score no21_post if thru21==1 & d3==1	 , absorb(gymnast_id emnumid) nolog // D3
+
 
 // do this with full aregs on Stata19 after sync for the pre/post only girlies
+areg score no2021 if pree21==1 & norcal==1, absorb(emnumid) cluster(emnumid) nolog // NorCal
+areg score no2021 if pree21==1 & d2==1	  , absorb(emnumid) cluster(emnumid) nolog // D2
+areg score no2021 if pree21==1 & d3==1	  , absorb(emnumid) cluster(emnumid) nolog // D3
+
+areg score no2021 if post21==1 & norcal==1, absorb(emnumid) cluster(emnumid) nolog // NorCal
+areg score no2021 if post21==1 & d2==1	  , absorb(emnumid) cluster(emnumid) nolog // D2
+areg score no2021 if post21==1 & d3==1	  , absorb(emnumid) cluster(emnumid) nolog // D3
+
+
+// event study??????????????
+reg score no2021##ib2020.year, cluster(emnumid) // doesn't work i don't think
 
 
 
