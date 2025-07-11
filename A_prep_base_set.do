@@ -7,7 +7,7 @@ clean up the scores dataset from github.com/tmorg46/ncaa_wag_scores
 discard
 clear all
 
-global route "/Users/tmorg46/Desktop/long_layoff"
+global route "C:/Users/toom/Desktop/long_layoff"
 
 
 *******************************
@@ -17,8 +17,6 @@ global route "/Users/tmorg46/Desktop/long_layoff"
 import delimited using ///
 	"${route}/data/raw_data/cleaned_scores.csv" ///
 	, varn(1) bindquote(strict) clear
-	
-drop if 
 
 merge m:1 team using "${route}/data/raw_data/team_divisions.dta", keep(1 3) nogen // we need division info!!
 

@@ -10,7 +10,7 @@ make one big dataset-building file, where, for each of our relevant specs:
 discard
 clear all
 
-global route "/Users/tmorg46/Desktop/long_layoff"
+global route "C:/Users/toom/Desktop/long_layoff"
 
 
 ******************************

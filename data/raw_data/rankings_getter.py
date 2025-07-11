@@ -53,7 +53,7 @@ def main():
 
         print(f"scraped for {year}")
 
-    df = pd.DataFrame(data, columns=["year", "rank", "team", "nqs", "avg", "high"])
+    df = pd.DataFrame(data, columns=["year", "nqs_rank", "team", "nqs", "avg", "high"])
 
     scrape = "C:/Users/toom/Desktop/rankscrapes.csv"
     df.to_csv(scrape, index=False, encoding="utf-8")
